@@ -6,8 +6,22 @@
 </head>
 <body>
 
-<p>title: <span th:text="${book.title}"></span></p>
-<p>isbn: <span th:text="${book.isbn}"></span></p>
-<p>author: <span th:text="${book.author}"></span></p>
+<h1>Book list </h1>
+<br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>isbn</th>
+            <th>Author</th>
+        </tr>
+        <tr th:each="book:${books}">
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.isbn}"></td>
+            <td th:text="${book.author}"></td>
+        </tr>
+    </table>
+    <button type="button">Go back</button>
+</div>
 </body>
 </html>
