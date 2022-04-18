@@ -12,32 +12,20 @@ import java.util.List;
 //@RequestMapping("/books")
 public class BookController {
 
-//    @GetMapping("/book-create")
-//    public String bookForm(){
-//        return "book-create";
-//    }
-//    @PostMapping("/book-create")
-//    public String saveBook(final BookDto bookDto, final Model model){
-//        System.out.println("save book: " + bookDto);
-//        model.addAttribute("book",bookDto);
-//        return "saved-book";
-//    }
+
+    List<BookDto> books = new ArrayList<>();
+
+    @GetMapping("/book-create")
+    public String bookForm(){
+        return "book-create";
+    }
 
 
-
-        List<BookDto> books = new ArrayList<>();
-
-        @GetMapping("/book-create")
-        public String bookForm(){
-            return "book-create";
-        }
-
-
-        @GetMapping("show_books")
-        public String getBooks(Model model) {
-            model.addAttribute("books", books);
-            return "saved-book";
-        }
+    @GetMapping("show_books")
+    public String getBooks(Model model) {
+        model.addAttribute("books", books);
+        return "book-create";
+    }
 
     @PostMapping("/book-create")
     public String createBook(@ModelAttribute BookDto book) {
