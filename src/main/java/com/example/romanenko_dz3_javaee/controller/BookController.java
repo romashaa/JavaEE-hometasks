@@ -16,7 +16,7 @@ public class BookController {
 
     private final BookService booksService;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<List<BookDto>> saveBook(@RequestBody final BookDto book) {
         booksService.saveBook(book);
 
@@ -25,17 +25,32 @@ public class BookController {
                 .body(booksService.getAllBooks());
     }
 
-    @RequestMapping(value = "/filter", method = RequestMethod.POST)
-    public ResponseEntity<List<BookDto>> findBooks(@RequestBody final BookDto book) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(booksService.searchBooks(book.getTitle(), book.getISBN()));
-    }
+//    @PostMapping("/filter")
+//    public ResponseEntity<List<BookDto>> findBooks(@RequestBody final BookDto book) {
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body(booksService.searchBooks(book.getTitle(), book.getISBN()));
+//    }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<BookDto>> getAll() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(booksService.getAllBooks());
     }
+
+    @GetMapping("/get-books")
+    public ResponseEntity<List<BookDto>> getBooks(@RequestParam(name = "param", required = false) final String param) {
+        System.out.println("Accept get book request: " + (param == null ? "No query" : param));
+        List<BookDto> response;
+        if(param == null) {
+            response = booksService.getAllBooks();
+        } else {
+            response = booksService.getBooks(param);
+        }
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
+    }
+
 }

@@ -35,15 +35,11 @@
     <div>
         <form id="searchBooksForm" class="ml-4 mt-2">
             <div class="form-group row">
-                <label class="col-sm-1 col-form-label ml-1" for="isbnFind">Find by title</label>
-                <input type="text" class="col-sm-3 form-control" id="titleFind" name="title">
-                <label class="col-sm-2 col-form-label " for="isbnFind">Find by ISBN</label>
-                <input type="text" class="col-sm-2 form-control" id="isbnFind" name="isbn">
-                <button type="submit" value="Search" class="btn btn-primary btn-sm ml-1">Search</button>
+                <label class="col-sm-1 col-form-label ml-1" for="isbnFind">Find by title or ISBN</label>
+                <input type="text" class="col-sm-3 form-control" id="isbnFind" name="title">
+                <button type="submit" id="searchBtn" class="btn btn-primary btn-sm ml-1">Search</button>
             </div>
         </form>
-
-
 
 
         <button id="getAll" class="btn btn-primary ml-3">Get all</button>
@@ -64,7 +60,6 @@
     $(function () {
         $('#saveBookForm').submit(function (e) {
             e.preventDefault();
-
             let $books = $('#booksTable');
             $books.empty();
 
@@ -87,33 +82,26 @@
                     })
                 }
             });
+            $("#titleField").val("");
+            $("#isbnField").val("");
+            $("#authorField").val("");
         });
 
-        $('#searchBooksForm').submit(function (e) {
-            e.preventDefault();
 
-            let $books = $('#booksTable');
-            $books.empty();
-
-            $.ajax({
-                type: 'POST',
-                url: '/books/filter',
-                dataType: 'json',
-                data: JSON.stringify({
-                    title: $(this).find('[name=title]').val(),
-                    isbn: $(this).find('[name=isbn]').val()
-                }),
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Content-Type', 'application/json')
-                },
-                success: function (response) {
-
-                    response.forEach(function (book) {
-                        $books.append('<tr><td>' + book.title + '</td><td>' + book.isbn + '</td><td>' + book.author + '</td></tr>');
-                    })
-                }
+            $('#searchBtn').click(function (e) {
+                e.preventDefault();
+                let $books = $('#booksTable');
+                $books.empty();
+                let query = $('#isbnFind').val();
+                $.ajax({
+                    url: '/books/get-books?param=' + query,
+                    success: function (response) {
+                        response.forEach(function (book) {
+                            $books.append('<tr><td>' + book.title + '</td><td>' + book.isbn + '</td><td>' + book.author + '</td></tr>');
+                        })
+                    }
+                });
             });
-        });
 
         $('#getAll').click(function () {
             let $books = $('#booksTable');
@@ -127,7 +115,11 @@
                     })
                 }
             });
+
+
         });
+
+
     });
 </script>
 

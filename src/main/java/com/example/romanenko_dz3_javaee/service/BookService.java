@@ -2,7 +2,6 @@ package com.example.romanenko_dz3_javaee.service;
 
 import com.example.romanenko_dz3_javaee.dto.BookDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,9 +21,9 @@ public class BookService {
         return books;
     }
 
-    public List<BookDto> searchBooks(String name, String isbn) {
-        return books.stream()
-                .filter(book -> book.getISBN().contains(isbn) || book.getTitle().contains(name))
-                .collect(Collectors.toList());
-    }
+public  List<BookDto> getBooks(String name) {
+    return books.stream()
+            .filter(bookDto -> bookDto.getTitle().contains(name) || bookDto.getISBN().contains(name))
+            .collect(Collectors.toList());
+}
 }
