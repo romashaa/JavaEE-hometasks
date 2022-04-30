@@ -1,29 +1,48 @@
 package com.example.romanenko_dz3_javaee.service;
 
-import com.example.romanenko_dz3_javaee.dto.BookDto;
+import com.example.romanenko_dz3_javaee.entity.Book;
+import com.example.romanenko_dz3_javaee.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class BookService {
-    List<BookDto> books = new ArrayList<>();
+    private final EntityManager entityManager;
 
-    public void saveBook(BookDto book) {
-        books.add(book);
+    private final BookRepository bookRepository;
+//    @Transactional
+//    public Book createBook(String title, String isbn, String author) {
+//        Book book = new Book();
+//        book.setTitle(title);
+//        book.setIsbn(isbn);
+//        book.setAuthor(author);
+//        return entityManager.merge(book);
+//    }
+
+
+
+    @Transactional
+    public void saveBook(Book book) {
+        bookRepository.save(book);
+    }
+    @Transactional
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
     }
 
-    public List<BookDto> getAllBooks() {
-        return books;
+    @Transactional
+    public  List<Book> getBooks(String param) {
+        return bookRepository.getAllByIsbnOrName(param);
     }
 
-public  List<BookDto> getBooks(String name) {
-    return books.stream()
-            .filter(bookDto -> bookDto.getTitle().contains(name) || bookDto.getISBN().contains(name))
-            .collect(Collectors.toList());
-}
+    @Transactional
+    public Book getBookByIsbn(String isbn){
+        return bookRepository.findByIsbn(isbn);
+    }
 }

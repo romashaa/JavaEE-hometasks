@@ -1,10 +1,12 @@
 package com.example.romanenko_dz3_javaee.controller;
 
-import com.example.romanenko_dz3_javaee.dto.BookDto;
+import com.example.romanenko_dz3_javaee.entity.Book;
 import com.example.romanenko_dz3_javaee.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,10 +16,11 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
 
-    private final BookService booksService;
+    @Autowired
+     BookService booksService;
 
     @PostMapping
-    public ResponseEntity<List<BookDto>> saveBook(@RequestBody final BookDto book) {
+    public ResponseEntity<List<Book>> saveBook(@RequestBody final Book book) {
         booksService.saveBook(book);
 
         return ResponseEntity
@@ -25,24 +28,25 @@ public class BookController {
                 .body(booksService.getAllBooks());
     }
 
-//    @PostMapping("/filter")
-//    public ResponseEntity<List<BookDto>> findBooks(@RequestBody final BookDto book) {
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .body(booksService.searchBooks(book.getTitle(), book.getISBN()));
-//    }
+    @GetMapping("/book/{isbn}")
+    public String showBook(@PathVariable("isbn") String isbn, Model model) {
+        model.addAttribute("book", booksService.getBookByIsbn(isbn));
+        return "books/book";
+    }
+
+
 
     @GetMapping
-    public ResponseEntity<List<BookDto>> getAll() {
+    public ResponseEntity<List<Book>> getAll() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(booksService.getAllBooks());
     }
 
     @GetMapping("/get-books")
-    public ResponseEntity<List<BookDto>> getBooks(@RequestParam(name = "param", required = false) final String param) {
+    public ResponseEntity<List<Book>> getBooks(@RequestParam(name = "param", required = false) final String param) {
         System.out.println("Accept get book request: " + (param == null ? "No query" : param));
-        List<BookDto> response;
+        List<Book> response;
         if(param == null) {
             response = booksService.getAllBooks();
         } else {

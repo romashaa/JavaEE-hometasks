@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Book</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+<body>
+<br />
+isbn: <th:block th:text="${book.isbn}" />
+<br />
+name: <th:block th:text="${book.name}" />
+<br />
+author: <th:block th:text="${book.author}" />
+</body>
+</body>
+</html>
