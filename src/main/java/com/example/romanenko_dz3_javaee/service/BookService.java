@@ -1,9 +1,8 @@
 package com.example.romanenko_dz3_javaee.service;
 
-import com.example.romanenko_dz3_javaee.entity.Book;
+import com.example.romanenko_dz3_javaee.entity.BookEntity;
 import com.example.romanenko_dz3_javaee.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,21 +27,21 @@ public class BookService {
 
 
     @Transactional
-    public void saveBook(Book book) {
+    public void saveBook(BookEntity book) {
         bookRepository.save(book);
     }
     @Transactional
-    public List<Book> getAllBooks() {
+    public List<BookEntity> getAllBooks() {
         return bookRepository.findAll();
     }
 
     @Transactional
-    public  List<Book> getBooks(String param) {
+    public  List<BookEntity> getBooks(String param) {
         return bookRepository.getAllByIsbnOrName(param);
     }
 
     @Transactional
-    public Book getBookByIsbn(String isbn){
+    public BookEntity getBookByIsbn(String isbn){
         return bookRepository.findByIsbn(isbn);
     }
 }

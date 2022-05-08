@@ -13,7 +13,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Entity
 @Table(name = "books")
-public class Book {
+public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,6 +23,6 @@ public class Book {
     String author;
 
 
-    public Book(String title1, String author1, String isbn1) {
+    public BookEntity(String title1, String author1, String isbn1) {
     }
 }

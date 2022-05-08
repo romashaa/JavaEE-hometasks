@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>
+        Login
+    </title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <meta name="viewport" content="" width="device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div class="container">
+
+    <div>
+        <form id="signIn" th:action="@{/sign-in}" th:object="${user}" method="post">
+            <h2>SIGN IN</h2>
+
+
+            <div class="form-group row">
+                <label for="username">Username</label>
+                <input placeholder="Enter Username" class="col-sm-4 form-control" type="text" id="username" name="username">
+            </div>
+
+            <div class="form-group row">
+                <label for="username">Username</label>
+                <input placeholder="Enter Username" class="col-sm-4 form-control" type="password" id="password" name="password">
+            </div>
+
+            <input type="submit" value="Login">
+            <p><a th:href="@{/sign-up}">Sign up</a></p>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>
