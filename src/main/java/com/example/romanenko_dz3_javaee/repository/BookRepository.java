@@ -14,5 +14,5 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
     Book findByIsbn(String isbn);
 
     @Query("SELECT b FROM Book b WHERE lower(b.title) LIKE %:param% OR lower(b.isbn) LIKE %:param%")
-    List<Book> getAllByIsbnOrName(@Param("param") String param);
+    List<Book> getAllByIsbnOrName(@Param("param") String query);
 }
